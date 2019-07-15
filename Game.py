@@ -1,56 +1,49 @@
 from Resource import clsResource
+from enum import Enum
 
+class Direction(Enum):
+    Row = 1
+    Column = 2
+    Diagonal = 3
 
 class clsGame:
     def __init__(self):
         self.InstanceResource = clsResource()
         self.MatrixArray = [[],[],[]]
-        self.CurrentSign = '_'
+        self.CurrentSign = ' '
         
     def InitMatrix(self):
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
-                self.MatrixArray[x].append("_")
-        self.Print()
-    
-    def Print(self):
-        for x in range(0, self.InstanceResource.MatrixSize):
-            print(self.MatrixArray[x])
+                self.MatrixArray[x].append(" ")
 
     def SetPosition(self,Sign,x,y):
         self.CurrentSign = Sign
         self.MatrixArray[x-1][y-1]= Sign
-        self.Print()
-        
+
     def IsWinner(self):
-        # self.LineCheck()
-        self.ColumnCheck()
-        
-    def LineCheck(self):
-        IsWin = False 
+        result = (self.DirectionCheck(Direction.Row) or
+                  self.DirectionCheck(Direction.Column) or
+                  self.DirectionCheck(Direction.Diagonal)
+                  )
+        if (result == True):
+            print("{} is win !!!!!".format(self.CurrentSign))
+        return result
+
+    def DirectionCheck(self,direction):
         for x in range(0, self.InstanceResource.MatrixSize):
             Counter = 0
             for y in range(0, self.InstanceResource.MatrixSize):
-                if (self.MatrixArray[x-1][y-1] == self.CurrentSign):
+                if (((direction.Row) and (self.MatrixArray[x-1][y-1] == self.CurrentSign)) or
+                   # ((direction.Diagonal) and (self.MatrixArray[x - 1][x - 1] == self.CurrentSign)) or
+                    ((direction.Column) and (self.MatrixArray[y - 1][x - 1] == self.CurrentSign))):
                     Counter += 1
                     if (Counter == self.InstanceResource.MatrixSize):
-                        IsWin == True
-                        print("{} is win !!!!!",self.CurrentSign)
-                        
-    def ColumnCheck(self):
-        IsWin = False
-        for x in range(0, self.InstanceResource.MatrixSize):
-            Counter = 0
-            for y in range(0, self.InstanceResource.MatrixSize):
-                if (self.MatrixArray[x-1][y-1] == self.CurrentSign):
-                    Counter += 1
-                    if (Counter == self.InstanceResource.MatrixSize):
-                        IsWin == True
-                        print("{} is win !!!!!",self.CurrentSign)
-                        break
-                else :
-                    Counter = 0
-                    break
+                        return True
+        return False
+
+
+
 
         
         
