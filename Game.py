@@ -16,19 +16,24 @@ class clsGame:
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
                 self.MatrixArray[x].append(" ")
+    def Clear(self):
+        for x in range(0, self.InstanceResource.MatrixSize):
+            for y in range(0, self.InstanceResource.MatrixSize):
+                self.MatrixArray[x - 1][y - 1] = ' '
+
 
     def SetPosition(self,Sign,x,y):
         self.CurrentSign = Sign
-        self.MatrixArray[x-1][y-1]= Sign
+        if (self.MatrixArray[x-1][y-1] == ' '):
+             self.MatrixArray[x - 1][y - 1] = Sign
+             return True
+        else: return False
 
     def IsWinner(self):
-        result = (self.DirectionCheck(Direction.Row) or
+        return (self.DirectionCheck(Direction.Row) or
                   self.DirectionCheck(Direction.Column) or
                   self.DirectionCheck(Direction.Diagonal)
                   )
-        if (result == True):
-            print("{} is win !!!!!".format(self.CurrentSign))
-        return result
 
     def DirectionCheck(self,direction):
         for x in range(0, self.InstanceResource.MatrixSize):
