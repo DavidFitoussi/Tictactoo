@@ -37,7 +37,7 @@ while (loopnumber < InstanceResource.MatrixSize * InstanceResource.MatrixSize) a
         else:
             print("Next player")
             loopnumber += 1
-        Print()
+            Print()
         if (InstanceGame.IsWinner()==True):
             print("{} IS WIN !!!!!".format(CurrentSign))
             print('Play again ?(y/n):')

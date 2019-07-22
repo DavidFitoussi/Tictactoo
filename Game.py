@@ -10,13 +10,16 @@ class Direction(Enum):
 class clsGame:
     def __init__(self):
         self.InstanceResource = clsResource()
-        self.MatrixArray = [[],[],[]]
+        self.MatrixArray = []
         self.CurrentSign = ' '
         
     def InitMatrix(self):
         for x in range(0, self.InstanceResource.MatrixSize):
+            list = []
+            self.MatrixArray.append(list)
+        for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
-                self.MatrixArray[x].append(" ")
+                self.MatrixArray[x].append(' ')
     def Clear(self):
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
@@ -26,14 +29,14 @@ class clsGame:
     def SetPosition(self,Sign,x,y):
         self.CurrentSign = Sign
         if (self.MatrixArray[x-1][y-1] == ' '):
-             self.MatrixArray[x - 1][y - 1] = Sign
-             return True
+            self.MatrixArray[x - 1][y - 1] = Sign
+            return True
         else: return False
 
     def IsWinner(self):
-        return (#self.DirectionCheck(Direction.Row) or
-                #self.DirectionCheck(Direction.Column) or
-                #self.DirectionCheck(Direction.DiagonalX) or
+        return (self.DirectionCheck(Direction.Row) or
+                self.DirectionCheck(Direction.Column) or
+                self.DirectionCheck(Direction.DiagonalX) or
                 self.DirectionCheck(Direction.DiagonalY)
                   )
 
@@ -46,7 +49,7 @@ class clsGame:
                 if (
                     ((direction == Direction.Row) and (self.MatrixArray[x-1][y-1] == self.CurrentSign)) or
                     ((direction == Direction.DiagonalX) and (self.MatrixArray[x - 1][x - 1] == self.CurrentSign) and (x==y)) or
-                    ((direction == Direction.DiagonalY) and (self.MatrixArray[x - 1][x - 1] == self.CurrentSign) and (y == self.InstanceResource.MatrixSize -x)) or
+                    ((direction == Direction.DiagonalY) and (self.MatrixArray[self.InstanceResource.MatrixSize -x - 1][y] == self.CurrentSign) and (x == y)) or
                     ((direction == Direction.Column) and (self.MatrixArray[y - 1][x - 1] == self.CurrentSign))
                 ):
                     Counter += 1
