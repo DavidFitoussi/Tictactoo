@@ -1,5 +1,8 @@
 from Resource import clsResource
 from enum import Enum
+import random
+
+
 
 class Direction(Enum):
     Row = 1
@@ -11,6 +14,7 @@ class clsGame:
     def __init__(self):
         self.InstanceResource = clsResource()
         self.MatrixArray = []
+        self.FreePlaces  =[]
         self.CurrentSign = ' '
         
     def InitMatrix(self):
@@ -20,18 +24,28 @@ class clsGame:
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
                 self.MatrixArray[x].append(' ')
+                self.FreePlaces.append([x ,y])
     def Clear(self):
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
                 self.MatrixArray[x - 1][y - 1] = ' '
 
 
+
     def SetPosition(self,Sign,x,y):
         self.CurrentSign = Sign
         if (self.MatrixArray[x-1][y-1] == ' '):
             self.MatrixArray[x - 1][y - 1] = Sign
+            self.FreePlaces.remove([x -1,y -1 ])
             return True
         else: return False
+    def GetRandomFreePlace(self):
+        x= random.randint(0,len(self.FreePlaces))
+        print ("Free place {}".format(x))
+        return self.FreePlaces[x]
+
+
+
 
     def IsWinner(self):
         return (self.DirectionCheck(Direction.Row) or

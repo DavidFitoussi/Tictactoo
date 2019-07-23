@@ -1,5 +1,6 @@
 
 # config.py
 DATABASE_CONFIG = {
-    'MatrixSize': 3
+    'MatrixSize': 3,
+    'ComputerPlayer' : True
 }
