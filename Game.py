@@ -24,11 +24,14 @@ class clsGame:
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
                 self.MatrixArray[x].append(' ')
-                self.FreePlaces.append([x ,y])
+                self.FreePlaces.append([x +1,y +1])
+        #print("Free place are ", self.FreePlaces)
     def Clear(self):
+        self.FreePlaces = []
         for x in range(0, self.InstanceResource.MatrixSize):
             for y in range(0, self.InstanceResource.MatrixSize):
                 self.MatrixArray[x - 1][y - 1] = ' '
+                self.FreePlaces.append([x + 1, y + 1])
 
 
 
@@ -36,13 +39,20 @@ class clsGame:
         self.CurrentSign = Sign
         if (self.MatrixArray[x-1][y-1] == ' '):
             self.MatrixArray[x - 1][y - 1] = Sign
-            self.FreePlaces.remove([x -1,y -1 ])
+            xToRemove = x
+            yToRemove = y
+            list = [xToRemove,yToRemove]
+            #print("set position {} and remove from Free place {}".format(list, self.FreePlaces))
+            self.FreePlaces.remove([xToRemove,yToRemove])
+            #print("After set position ,Free place are ", self.FreePlaces)
             return True
         else: return False
+
     def GetRandomFreePlace(self):
-        x= random.randint(0,len(self.FreePlaces))
-        print ("Free place {}".format(x))
-        return self.FreePlaces[x]
+        #print("GetRandomFreePlace from Free places:", self.FreePlaces)
+        x= random.randint(1,len(self.FreePlaces))
+        #print ("Free place {}".format(x))
+        return self.FreePlaces[x -1]
 
 
 

@@ -1,15 +1,16 @@
 from Game import clsGame
 from Resource import  clsResource
-
+import os
 
 def Print():
+    _ = os.system('cls')
     underline = ""
     for z in range(0, InstanceResource.MatrixSize):
-        underline += "---"
+        underline += "===="
     line = ""
     for x in range(0, InstanceResource.MatrixSize):
         for y in range(0, InstanceResource.MatrixSize):
-            line += InstanceGame.MatrixArray[x][y] + (" | " if y < InstanceResource.MatrixSize -1 else "")
+            line += InstanceGame.MatrixArray[x][y] + (" II " if y < InstanceResource.MatrixSize -1 else "")
         print(line)
         line =""
         if (x < InstanceResource.MatrixSize -1 ):
@@ -60,11 +61,9 @@ while (loopnumber < InstanceResource.MatrixSize * InstanceResource.MatrixSize) a
             else:
                 InstanceGame.Clear()
                 loopnumber= 0
-                Print()
         else:
-            Print()
             print("Next player")
-
+        Print()
 
 print("Game over")
 
