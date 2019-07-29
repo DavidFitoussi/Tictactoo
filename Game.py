@@ -3,7 +3,7 @@ from enum import Enum
 import random
 
 
-
+# Direction Enum used to check the different direction of line winner 
 class Direction(Enum):
     Row = 1
     Column = 2
@@ -11,12 +11,16 @@ class Direction(Enum):
     DiagonalY = 4
 
 class clsGame:
+    # constructor of Game , initialize the local variables
+    # Matrixarray is multiple array of list [[],[],[]] 
+    # FreePlaces is the list of the free place in the array , needed for computer player whitch choose his random number in this list  
     def __init__(self):
-        self.InstanceResource = clsResource()
+        self.InstanceResource = clsResource() 
         self.MatrixArray = []
         self.FreePlaces  =[]
         self.CurrentSign = ' '
         
+    # initialize the matrix according to the size of matrix from the configuration 
     def InitMatrix(self):
         for x in range(0, self.InstanceResource.MatrixSize):
             list = []
@@ -25,7 +29,7 @@ class clsGame:
             for y in range(0, self.InstanceResource.MatrixSize):
                 self.MatrixArray[x].append(' ')
                 self.FreePlaces.append([x +1,y +1])
-        #print("Free place are ", self.FreePlaces)
+
     def Clear(self):
         self.FreePlaces = []
         for x in range(0, self.InstanceResource.MatrixSize):
@@ -48,15 +52,12 @@ class clsGame:
             return True
         else: return False
 
+    # Return a couple of position x,y get from freeplace array , when the position in the list is get by random function 
     def GetRandomFreePlace(self):
-        #print("GetRandomFreePlace from Free places:", self.FreePlaces)
         x= random.randint(1,len(self.FreePlaces))
-        #print ("Free place {}".format(x))
         return self.FreePlaces[x -1]
 
-
-
-
+    # Check all the posibility of a "full line" to win the game  
     def IsWinner(self):
         return (self.DirectionCheck(Direction.Row) or
                 self.DirectionCheck(Direction.Column) or
